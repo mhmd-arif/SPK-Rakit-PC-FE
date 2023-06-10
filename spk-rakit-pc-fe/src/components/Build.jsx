@@ -2,11 +2,10 @@ import { useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import { HeroImg } from "../assets";
 
-const Hero = () => {
-  const heroRef = useRef(null);
-
+const Build = () => {
+  const buildRef = useRef(null);
   return (
-    <div className="Hero w-full h-screen font-poppins text-white bg-[#2F4550] " ref={heroRef} >
+    <div className="Build w-full h-screen font-poppins text-white bg-[#2F4550] " ref={buildRef} >
       <div className='flex flex-row h-full font-poppins text-white px-[100px] pt-[80px]'>
         <div className='basis-1/2 flex flex-col'>
           <div className='items-start'>
@@ -28,4 +27,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Build;
