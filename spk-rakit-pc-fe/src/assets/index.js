@@ -1,5 +1,6 @@
 import ReactSvg from "./react.svg"
 import logoRakitPc from "./logoRakitPc.png"
 import HeroImg from "./HeroImg.png"
+import bgBuild from "./bgBuild.png"
 
-export { ReactSvg, logoRakitPc, HeroImg }
+export { ReactSvg, logoRakitPc, HeroImg, bgBuild }
