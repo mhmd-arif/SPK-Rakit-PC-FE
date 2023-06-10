@@ -17,7 +17,7 @@ const Navbar = ({ onHeroClick, onBuildClick }) => {
     <div className="navbar bg-[#2F4550]">
       <div className={"z-[1] font-poppins sticky flex flex-row container mx-auto lg:px-[100px] text-center items-center text-lg font-semibold text-black " +
         "justify-between transform duration-300 ease overflow-hidden "}>
-        <a href="/" className="flex flex-row justify-start items-center h-full text-white">
+        <a onClick={toHome} className="flex flex-row justify-start items-center h-full text-white cursor-pointer">
           <img src={logoRakitPc} className={"m-2 transform duration-300 ease h-[40px]"} />
           <p className="transform">Rakit PC</p>
         </a>
