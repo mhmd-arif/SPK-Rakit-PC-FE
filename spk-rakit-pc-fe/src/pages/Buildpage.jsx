@@ -1,14 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import Build from '../components/Build';
 import Footer from "../components/Footer";
-import Hero from '../components/Hero';
 
-export default function Homepage() {
+export default function Buildpage() {
 
   return (
     <>
       <Navbar />
-      <Hero />
+      <Build />
       <Footer />
     </>
   );

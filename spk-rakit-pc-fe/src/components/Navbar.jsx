@@ -3,6 +3,15 @@ import { logoRakitPc } from "../assets";
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ onHeroClick, onBuildClick }) => {
+  const navigate = useNavigate();
+
+  const toHome = () => {
+    navigate('/');
+  };
+
+  const toBuild = () => {
+    navigate('/build');
+  };
 
   return (
     <div className="navbar bg-[#2F4550]">
@@ -14,8 +23,8 @@ const Navbar = ({ onHeroClick, onBuildClick }) => {
         </a>
 
         <div className="text-white flex flex-row gap-9">
-          <button onClick={onHeroClick}>Home</button>
-          <button onClick={onBuildClick}>Build</button>
+          <button onClick={toHome} >Home</button>
+          <button onClick={toBuild}>Build</button>
         </div>
 
       </div>

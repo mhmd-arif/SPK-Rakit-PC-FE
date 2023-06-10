@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 // pages and assets
 import App from './App.jsx';
 import Homepage from './pages/Homepage.jsx';
+import Buildpage from './pages/Buildpage.jsx';
 import './index.css';
 
 // router
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route exact path='/' element={<App />}>
       <Route path='/' element={<Homepage />} />
+      <Route path='/build' element={<Buildpage />} />
     </Route>
   )
 );
