@@ -7,8 +7,8 @@ const Footer = () => {
         <div className=" w-full h-32 text-white flex flex-col px-10 pt-5 gap-3">
           <div className="flex flex-row justify-between items-center">
             <div className="flex flex-col font-semibold">
-              Kelompok Kecil 11<br/>
-              IAI 2022/2023
+              Rakit PC<br/>
+              Tugas Sitem Pendukung Keputusan
             </div>
             <div className="flex flex-row h-10 gap-2">
               <a className="p-1 rounded-md bg-[#4267B2] hover:bg-[#35538f] ease transition-all duration-300" href="https://www.facebook.com/">

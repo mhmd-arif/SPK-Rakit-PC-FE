@@ -7,7 +7,7 @@ export default function Homepage() {
     <>
       <Navbar />
       {/* <Hero /> */}
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
