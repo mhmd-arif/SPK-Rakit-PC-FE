@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
         </div>
         <div className='basis-1/2 flex flex-row items-center justify-center'>
-          <img src={HeroImg} alt="img PC Components" className='w-[600px]' />
+          <img src={HeroImg} alt="img PC Components" className='w-[500px]' />
         </div>
       </div>
     </div>
