@@ -86,6 +86,11 @@ const TableResult = ({ jenisPenggunaan, totalBudget }) => {
                 width: 100,
             },
             {
+                Header: "Spesifikasi",
+                accessor: "spesification",
+                width: 80,
+            },
+            {
                 Header: "Performa",
                 accessor: "performance",
                 width: 80,
