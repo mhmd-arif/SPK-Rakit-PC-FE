@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Homepage from './pages/Homepage.jsx';
 import Buildpage from './pages/Buildpage.jsx';
+import Cek from './components/Cek.jsx'
 import './index.css';
 
 // router
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
     <Route exact path='/' element={<App />}>
       <Route path='/' element={<Homepage />} />
       <Route path='/build' element={<Buildpage />} />
+      <Route path='/cek' element={<Cek />} />
     </Route>
   )
 );
