@@ -14,6 +14,10 @@ const Navbar = ({ onHeroClick, onBuildClick }) => {
     navigate('/build');
   };
 
+  const toCatalogue = () => {
+    navigate('/catalogue');
+  };
+
   return (
     <div className="navbar bg-[#2F4550]">
       <div className={"z-[1] font-poppins sticky flex flex-row container mx-auto lg:px-[100px] text-center items-center text-lg font-semibold text-black " +
@@ -26,6 +30,7 @@ const Navbar = ({ onHeroClick, onBuildClick }) => {
         <div className="text-white flex flex-row gap-9">
           <button onClick={toHome} >Home</button>
           <button onClick={toBuild}>Build</button>
+          <button onClick={toCatalogue}>Catalogue</button>
         </div>
 
       </div>
