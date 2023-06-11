@@ -1,121 +1,163 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
-import Moment from "moment/moment";
+import React, { useState, useMemo } from 'react';
+import { useTable } from 'react-table';
+import komponen from '../database/ComponentData';
+import { Button } from '@chakra-ui/react';
 
-// eslint-disable-next-line react/prop-types
-export default function ({ columns, data, setRefreshSignal, setShowToast }) {
-  let currentMonth = Moment(new Date().toLocaleDateString()).format("MM");
-  let currentYear = Moment(new Date().toLocaleDateString()).format("YYYY");
+const TableResult = ({ jenisPenggunaan, totalBudget }) => {
+    const [rekomendasi, setRekomendasi] = useState([]);
+    const [totalHarga, setTotalHarga] = useState(0);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    state,
-    setGlobalFilter,
-    setFilter,
-    prepareRow,
-    pageOptions,
-    gotoPage,
-    previousPage,
-    nextPage,
-    canPreviousPage,
-    canNextPage,
-    state: { pageIndex },
-  } = useTable({
-    columns, data,
-    initialState: {
-      sortBy: [
-        {
-          id: "tanggal",
-          desc: false
-        },
-        {
-          id: "waktu",
-          desc: false
-        }
-      ],
-      pageSize: 10,
-      filters: [{ id: "updatedAt", value: currentYear + "-" + currentMonth }],
+    const calculateRekomendasi = () => {
+        const cpuAlokasi = {
+            gaming: 0.8,
+            editing: 0.7,
+            casual: 0.5
+        };
+
+        const gpuAlokasi = {
+            gaming: 0.7,
+            editing: 0.8,
+            casual: 0.5
+        };
+
+        const ramAlokasi = {
+            gaming: 0.7,
+            editing: 0.7,
+            casual: 0.5
+        };
+
+        const cpuWeight = cpuAlokasi[jenisPenggunaan];
+        const gpuWeight = gpuAlokasi[jenisPenggunaan];
+        const ramWeight = ramAlokasi[jenisPenggunaan];
+
+        let maxPerforma = 0;
+        let finalRekomendasi = [];
+
+        komponen.cpu.forEach(cpu => {
+            komponen.gpu.forEach(gpu => {
+                komponen.ram.forEach(ram => {
+                    const totalHarga = cpu.price + gpu.price + ram.price;
+                    const totalPerforma = (cpu.performa * cpuWeight) + (gpu.performa * gpuWeight) + (ram.performa * ramWeight);
+                    const maxValueP = Math.max(cpu.performa, gpu.performa, ram.performa);
+                    const minValueP = Math.min(cpu.performa, gpu.performa, ram.performa);
+                    const diffValueP = maxValueP - minValueP <= 3;
+                    if (totalHarga <= totalBudget && diffValueP) {
+                        if (totalPerforma > maxPerforma) {
+                            maxPerforma = totalPerforma;
+                            finalRekomendasi = [cpu, gpu, ram];
+                        }
+                    }
+                });
+            });
+        });
+
+        setRekomendasi(finalRekomendasi);
+        setTotalHarga(finalRekomendasi.reduce((total, komponen) => total + komponen.price, 0));
+    };
+
+    const data = rekomendasi.map((komponen, index) => {
+        return {
+            no: index + 1,
+            type: komponen.type,
+            name: komponen.name,
+            performance: komponen.performa,
+            price: komponen.price
+        };
+    });
+
+    function rpFormatter(num) {
+        return 'Rp' + Intl.NumberFormat('en-DE').format(num)
     }
-  }, useGlobalFilter, useSortBy, usePagination);
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'No',
+                accessor: "no",
+                width: 30,
+            },
+            {
+                Header: "Komponen",
+                accessor: "type",
+                width: 80,
+            },
+            {
+                Header: "Nama komponen",
+                accessor: "name",
+                width: 100,
+            },
+            {
+                Header: "Performa",
+                accessor: "performance",
+                width: 80,
+            },
+            {
+                Header: "Harga",
+                accessor: "price",
+                Cell: ({ value }) => {
+                    return rpFormatter(value);
+                },
+                width: 100,
+            },
+        ], []
+    );
 
-  const { globalFilter } = state;
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow
+    } = useTable({
+        columns,
+        data
+    });
 
-  return (
-    <div className="text-black flex flex-col items-center justify-center mt-[100px]">
-      <div className=" w-[800px] border rounded-md bg-[#F4F4F9]">
-        <table {...getTableProps()} className="w-full table-fixed">
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-green-light">
-
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ width: column.width }}
-                    className={"cursor-pointer py-1 " +
-                      (column.isSorted
-                        ? column.isSortedDesc
-                          ? "sort-desc"
-                          : "sort-asc"
-                        : "")
-                    }>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map(row => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()} className="even:bg-green-light even:bg-opacity-50">
-                  {row.cells.map(cell => {
-                    return (
-                      <td {...cell.getCellProps()} className="text-center p-1 break-words">
-                        {cell.render('Cell')}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        {page.length == 0 &&
-          <div className="text-center py-10">
-            Sialakan masukan input.
-          </div>
-        }
-      </div>
-      {page.length > 0 &&
-        <div className="flex justify-center gap-2 pt-4 items-center">
-          <div className="flex gap-1">
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="bg-blue-light p-1 text-white font-semibold rounded-md disabled:bg-grey enabled:hover:bg-blue-primary transition ease-linear duration-300">
-              <img src={ChevronDoubleLeft} className="w-3" />
-            </button>
-            <button onClick={() => previousPage()} disabled={!canPreviousPage} className="bg-blue-light p-1 text-white font-semibold rounded-md disabled:bg-grey enabled:hover:bg-blue-primary transition ease-linear duration-300">
-              <img src={ChevronLeft} className="w-3" />
-            </button>
-            <button onClick={() => nextPage()} disabled={!canNextPage} className="bg-blue-light p-1 text-white font-semibold rounded-md disabled:bg-grey enabled:hover:bg-blue-primary transition ease-linear duration-300">
-              <img src={ChevronRight} className="w-3" />
-            </button>
-            <button onClick={() => gotoPage(pageOptions.length - 1)} disabled={!canNextPage} className="bg-blue-light p-1 text-white font-semibold rounded-md disabled:bg-grey enabled:hover:bg-blue-primary transition ease-linear duration-300">
-              <img src={ChevronDoubleRight} className="w-3" />
-            </button>
-          </div>
-          <span className="flex flex-row gap-1">
-            Halaman
-            <strong>
-              {pageIndex + 1} dari {pageOptions.length}
-            </strong>
-          </span>
+    return (
+        <div className='h-full flex flex-col justify-center items-center'>
+            <Button bg='#B8D0DB' onClick={calculateRekomendasi}>Rakit</Button>
+            <h3 className='mt-[50px] mb-[20px]'>Rekomendasi Komponen:</h3>
+            {rekomendasi.length > 0 ? (
+                <div className='flex flex-col gap-4'>
+                    <table {...getTableProps()} style={{ borderCollapse: 'collapse' }}>
+                        <thead>
+                            {headerGroups.map(headerGroup => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {headerGroup.headers.map(column => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            style={{ border: '1px solid black', padding: '8px' }}
+                                        >
+                                            {column.render('Header')}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                            {rows.map(row => {
+                                prepareRow(row);
+                                return (
+                                    <tr {...row.getRowProps()}>
+                                        {row.cells.map(cell => (
+                                            <td
+                                                {...cell.getCellProps()}
+                                                style={{ border: '1px solid black', padding: '8px' }}
+                                            >
+                                                {cell.render('Cell')}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                    <p>Total harga = {totalHarga}</p>
+                </div>
+            ) : (
+                <p>masukan input atau bugdet tidak mencukupi.</p>
+            )}
         </div>
-      }
-    </div>
-  );
-}
+    );
+};
+
+export default TableResult;
