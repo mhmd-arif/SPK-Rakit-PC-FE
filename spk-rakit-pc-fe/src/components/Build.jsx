@@ -66,7 +66,7 @@ const Build = () => {
         <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">
             <p>Jenis Penggunaan</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39' >
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -74,7 +74,7 @@ const Build = () => {
           </div>
           <div className="Select">
             <p>Budget</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39'>
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -88,7 +88,7 @@ const Build = () => {
         {showDiv && <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">
             <p>CPU</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39' >
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -96,7 +96,7 @@ const Build = () => {
           </div>
           <div className="Select">
             <p>RAM</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39'>
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -104,7 +104,7 @@ const Build = () => {
           </div>
           <div className="Select">
             <p>Storage</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39'>
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -112,7 +112,7 @@ const Build = () => {
           </div>
           <div className="Select">
             <p>Monitor</p>
-            <Select placeholder='Select option' w={256} >
+            <Select placeholder='Select option' w={256} borderColor='#002e39' >
               <option value='option1'>Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
@@ -121,8 +121,6 @@ const Build = () => {
         </div>}
 
         <Button bg='#B8D0DB'>Rakit</Button>
-
-
       </div>
       <div className="">
         <TableResult columns={columns} data={vouchers} setRefreshSignal={setRefreshSignal} />
