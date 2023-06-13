@@ -30,7 +30,7 @@ const Navbar = ({ onHeroClick, onBuildClick }) => {
         <div className="text-white flex flex-row gap-9">
           <button onClick={toHome} >Home</button>
           <button onClick={toBuild}>Build</button>
-          <button onClick={toCatalogue}>Catalogue</button>
+          {/* <button onClick={toCatalogue}>Catalogue</button> */}
         </div>
 
       </div>

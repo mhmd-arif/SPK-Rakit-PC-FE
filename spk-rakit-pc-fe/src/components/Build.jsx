@@ -25,8 +25,8 @@ const Build = () => {
             <p>Jenis Penggunaan</p>
             <Select isRequired={true} placeholder='Pilih opsi' w={256} borderColor='#002e39' value={jenisPenggunaan} onChange={e => setJenisPenggunaan(e.target.value)} >
               <option value='gaming'>Gaming</option>
-              <option value='editing'>Editing</option>
-              <option value='casual'>Casual</option>
+              <option value='office'>Office</option>
+              {/* <option value='casual'>Casual</option> */}
             </Select>
           </div>
           <div className="Select">
@@ -55,14 +55,8 @@ const Build = () => {
               <option value='any'>Bebas</option>
             </Select>
           </div>
-          {/* <div className="">
-            <Checkbox onChange={e => setMonitor(e.target.value)} >Dengan monitor?</Checkbox>
-          </div>
-          <div className="">
-            <Checkbox onChange={e => setperiPheral(e.target.value)} >Dengan peripheral</Checkbox>
-          </div> */}
           <div className="Select">
-            <p>Peripheral</p>
+            <p>Monitor</p>
             <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={monitor} onChange={e => setMonitor(parseInt(e.target.value))} >
               <option value={1} >Ya</option>
               <option value={0}>Tidak</option>

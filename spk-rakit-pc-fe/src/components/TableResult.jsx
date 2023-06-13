@@ -1,13 +1,25 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTable } from 'react-table';
-import komponen from '../database/ComponentData';
-import { useToast, Button } from '@chakra-ui/react';
+// import komponen from '../database/ComponentData';
+import { } from '@chakra-ui/react';
 import { fetcher } from '../helpers/fetcher';
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer,
+    useToast, Button
+} from '@chakra-ui/react'
 
 
 const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripheral }) => {
-    const [rekomendasi, setRekomendasi] = useState([]);
-    const [totalHarga, setTotalHarga] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [data, setData] = useState(null);
     const toast = useToast();
 
     const signInHandler = async () => {
@@ -20,10 +32,14 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                 "peripheral": peripheral,
                 "gpu_brand": gpu
             });
-            console.log(res.data.used_component)
+            const resData = res.data.used_component
+            setData(resData)
+
+            const totalPriceTemp = resData.reduce((sum, item) => sum + item.price, 0);
+            setTotalPrice(totalPriceTemp)
 
             toast({
-                title: 'Berhasil Masuk',
+                title: 'Berhasil',
                 status: 'success',
                 isClosable: true,
                 position: 'top',
@@ -32,174 +48,61 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
 
         } catch (error) {
             console.log(error)
-            // toast({
-            //     title: 'Email atau Password Salah',
-            //     status: 'error',
-            //     isClosable: true,
-            //     position: 'top',
-            //     duration: 5000,
-            // });
+            toast({
+                title: 'Gagal - Ulangi Kembali',
+                status: 'error',
+                isClosable: true,
+                position: 'top',
+                duration: 5000,
+            });
         }
     };
 
-    // const calculateRekomendasi = () => {
-    //     const cpuAlokasi = {
-    //         gaming: 0.8,
-    //         editing: 0.7,
-    //         casual: 0.5
-    //     };
-
-    //     const gpuAlokasi = {
-    //         gaming: 0.7,
-    //         editing: 0.8,
-    //         casual: 0.5
-    //     };
-
-    //     const ramAlokasi = {
-    //         gaming: 0.7,
-    //         editing: 0.7,
-    //         casual: 0.5
-    //     };
-
-    //     const cpuWeight = cpuAlokasi[jenisPenggunaan];
-    //     const gpuWeight = gpuAlokasi[jenisPenggunaan];
-    //     const ramWeight = ramAlokasi[jenisPenggunaan];
-
-    //     let maxPerforma = 0;
-    //     let finalRekomendasi = [];
-
-    //     komponen.cpu.forEach(cpu => {
-    //         komponen.gpu.forEach(gpu => {
-    //             komponen.ram.forEach(ram => {
-    //                 const totalHarga = cpu.price + gpu.price + ram.price;
-    //                 const totalPerforma = (cpu.performa * cpuWeight) + (gpu.performa * gpuWeight) + (ram.performa * ramWeight);
-    //                 const maxValueP = Math.max(cpu.performa, gpu.performa, ram.performa);
-    //                 const minValueP = Math.min(cpu.performa, gpu.performa, ram.performa);
-    //                 const diffValueP = maxValueP - minValueP <= 3;
-    //                 if (totalHarga <= totalBudget && diffValueP) {
-    //                     if (totalPerforma > maxPerforma) {
-    //                         maxPerforma = totalPerforma;
-    //                         finalRekomendasi = [cpu, gpu, ram];
-    //                     }
-    //                 }
-    //             });
-    //         });
-    //     });
-
-    //     setRekomendasi(finalRekomendasi);
-    //     setTotalHarga(finalRekomendasi.reduce((total, komponen) => total + komponen.price, 0));
-    // };
-
-    // const data = rekomendasi.map((komponen, index) => {
-    //     return {
-    //         no: index + 1,
-    //         type: komponen.type,
-    //         name: komponen.name,
-    //         performance: komponen.performa,
-    //         price: komponen.price
-    //     };
-    // });
-
-    // function rpFormatter(num) {
-    //     return 'Rp' + Intl.NumberFormat('en-DE').format(num)
-    // }
-    // const columns = useMemo(
-    //     () => [
-    //         {
-    //             Header: 'No',
-    //             accessor: "no",
-    //             width: 30,
-    //         },
-    //         {
-    //             Header: "Komponen",
-    //             accessor: "type",
-    //             width: 80,
-    //         },
-    //         {
-    //             Header: "Nama komponen",
-    //             accessor: "name",
-    //             width: 100,
-    //         },
-    //         {
-    //             Header: "Spesifikasi",
-    //             accessor: "spesification",
-    //             width: 80,
-    //         },
-    //         {
-    //             Header: "Performa",
-    //             accessor: "performance",
-    //             width: 80,
-    //         },
-    //         {
-    //             Header: "Harga",
-    //             accessor: "price",
-    //             Cell: ({ value }) => {
-    //                 return rpFormatter(value);
-    //             },
-    //             width: 100,
-    //         },
-    //     ], []
-    // );
-
-    // const {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     rows,
-    //     prepareRow
-    // } = useTable({
-    //     columns,
-    //     data
-    // });
-
     return (
         <div>
-            <p>halo</p>
-            <Button bg='#B8D0DB' onClick={signInHandler}>Rakit</Button>
-            {/* <div className='h-full flex flex-col justify-center items-center'>
-                <Button bg='#B8D0DB' onClick={calculateRekomendasi}>Rakit</Button>
-                <h3 className='mt-[50px] mb-[20px]'>Rekomendasi Komponen:</h3>
-                {rekomendasi.length > 0 ? (
-                    <div className='flex flex-col gap-4'>
-                        <table {...getTableProps()} style={{ borderCollapse: 'collapse' }}>
-                            <thead>
-                                {headerGroups.map(headerGroup => (
-                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {headerGroup.headers.map(column => (
-                                            <th
-                                                {...column.getHeaderProps()}
-                                                style={{ border: '1px solid black', padding: '8px' }}
-                                            >
-                                                {column.render('Header')}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody {...getTableBodyProps()}>
-                                {rows.map(row => {
-                                    prepareRow(row);
-                                    return (
-                                        <tr {...row.getRowProps()}>
-                                            {row.cells.map(cell => (
-                                                <td
-                                                    {...cell.getCellProps()}
-                                                    style={{ border: '1px solid black', padding: '8px' }}
-                                                >
-                                                    {cell.render('Cell')}
-                                                </td>
+            <div className='h-full flex flex-col justify-center items-center mt-[30px] pb-[50px]'>
+                <Button bg='#B8D0DB' onClick={signInHandler} className='mb-[20px]'>Rakit</Button>
+                <div>
+                    {data ?
+                        (<div className='w-[800px]  mb-[30px]'>
+                            <h3 className='my-[20px]'>Tabel rekomendasi komponen komputer untuk jenis pengunaan: {jenisPenggunaan} dengan budget: Rp.{totalBudget}</h3>
+                            <div className='bg-white rounded-xl'>
+                                <TableContainer>
+                                    <Table variant='striped' colorScheme='teal' w={250}>
+                                        <Thead >
+                                            <Tr>
+                                                <Th>Component</Th>
+                                                <Th>Price</Th>
+                                                <Th>Display Name</Th>
+                                            </Tr>
+                                        </Thead>
+                                        <Tbody>
+                                            {data.map((item, index) => (
+                                                <Tr key={index}>
+                                                    <Td>{item.component}</Td>
+                                                    <Td>{item.price}</Td>
+                                                    <Td>{item.display_name}</Td>
+                                                </Tr>
                                             ))}
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                        <p>Total harga = {totalHarga}</p>
-                    </div>
-                ) : (
-                    <p>masukan input atau bugdet tidak mencukupi.</p>
-                )}
-            </div> */}
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
+                            </div>
+                            <div className='my-[20px] text-md font-semi'>
+                                <p>
+                                    Total harga = Rp. {totalPrice}
+                                </p>
+                            </div>
+                        </div>
+                        )
+
+                        : (<div >
+                            <p >
+                                silahkan masukan input yang sesuai
+                            </p>
+                        </div>)}
+                </div>
+            </div>
         </div>
     );
 };
