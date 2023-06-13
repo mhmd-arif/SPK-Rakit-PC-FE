@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { BgBuild } from "../assets";
+import { BgBuild } from "../asset";
 // import bgBuild from "../../public/bgBuild.svg";
 import { Select, Checkbox, Input, Button } from '@chakra-ui/react'
 import TableResult from "./TableResult";
