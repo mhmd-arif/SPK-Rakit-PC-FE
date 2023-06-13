@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import BgBuild from "../../public/bgBuild.svg";
 import { Select, Checkbox, Input, Button } from '@chakra-ui/react'
 import TableResult from "./TableResult";
+import RupiahInput from './RupiahInput';
 
 const Build = () => {
   const [showDiv, setShowDiv] = useState(false);
@@ -17,13 +18,17 @@ const Build = () => {
     setShowDiv(!showDiv);
   };
 
+  const handleBudgetChange = (value) => {
+    setTotalBudget(value);
+  };
+
   return (
     <div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${BgBuild})` }} >
       <div className="flex flex-col items-center h-full pt-[120px] ">
         <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">
             <p>Jenis Penggunaan</p>
-            <Select isRequired={true} placeholder='Pilih opsi' w={256} borderColor='#002e39' value={jenisPenggunaan} onChange={e => setJenisPenggunaan(e.target.value)} >
+            <Select required placeholder='Pilih opsi' w={256} borderColor='#002e39' value={jenisPenggunaan} onChange={e => setJenisPenggunaan(e.target.value)} >
               <option value='gaming'>Gaming</option>
               <option value='office'>Office</option>
               {/* <option value='casual'>Casual</option> */}
@@ -31,7 +36,8 @@ const Build = () => {
           </div>
           <div className="Select">
             <p>Budget</p>
-            <Input variant='outline' placeholder='Masukan total budget' borderColor='#002e39' type="number" value={totalBudget} onChange={e => setTotalBudget(parseInt(e.target.value))} />
+            <RupiahInput value={totalBudget} onChange={handleBudgetChange} />
+            {/* <Input variant='outline' placeholder='Masukan total budget' borderColor='#002e39' type="number" value={totalBudget} onChange={e => setTotalBudget(parseInt(e.target.value))} /> */}
           </div>
           <div className="">
             <Checkbox checked={showDiv} onChange={handleCheckboxChange} >Spesifikasi tambahan</Checkbox>
