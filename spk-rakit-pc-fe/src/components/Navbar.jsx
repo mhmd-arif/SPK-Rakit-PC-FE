@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { LogoRakitPc } from "../asset";
-// import LogoRakitPc from "../../public/LogoRakitPC.svg"
+// import { LogoRakitPc } from "../asset";
+import LogoRakitPc from "../../public/logoRakitPC.svg"
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ onHeroClick, onBuildClick }) => {
