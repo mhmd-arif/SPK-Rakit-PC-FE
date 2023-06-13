@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LogoRakitPc } from "../assets";
+import { LogoRakitPc } from "../assets/index";
 // import LogoRakitPc from "../../public/LogoRakitPC.svg"
 import { useNavigate } from 'react-router-dom';
 

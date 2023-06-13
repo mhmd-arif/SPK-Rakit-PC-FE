@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { BgBuild } from "../assets";
+import { BgBuild } from "../assets/index";
 import { Divider } from "@chakra-ui/react";
 
 const Catalogue = () => {

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import { HeroImg } from "../assets";
+import { HeroImg } from "../assets/index";
 // import HeroImg from "../../public/heroImg.svg";
 
 const Hero = () => {
