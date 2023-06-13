@@ -23,10 +23,15 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
     const [data, setData] = useState(null);
     const toast = useToast();
 
-    const formattedBudget = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-    }).format(totalBudget);
+    function parseToIdr(number) {
+        const formatedNumber = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+        }).format(number);
+        return formatedNumber;
+    }
+
+
 
 
     const RakitHandler = async () => {
@@ -53,11 +58,7 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                 setData(resData)
 
                 const totalPriceTemp = resData.reduce((sum, item) => sum + item.price, 0);
-                const formattedPrice = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                }).format(totalPriceTemp);
-                setTotalPrice(formattedPrice)
+                setTotalPrice(parseToIdr(totalPriceTemp))
 
                 toast({
                     title: 'Berhasil',
@@ -88,7 +89,7 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                 <div>
                     {data ?
                         (<div className='w-[800px]  mb-[30px]'>
-                            <h3 className='my-[20px]'>Tabel rekomendasi komponen komputer untuk jenis pengunaan: {jenisPenggunaan} dengan budget: {formattedBudget}</h3>
+                            <h3 className='my-[20px]'>Tabel rekomendasi komponen komputer untuk jenis pengunaan: {jenisPenggunaan} dengan budget: {parseToIdr(totalBudget)}</h3>
                             <div className='bg-white rounded-xl'>
                                 <TableContainer>
                                     <Table variant='striped' colorScheme='teal' w={250}>
@@ -103,7 +104,7 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                                             {data.map((item, index) => (
                                                 <Tr key={index}>
                                                     <Td>{item.component}</Td>
-                                                    <Td>{item.price}</Td>
+                                                    <Td>{parseToIdr(item.price)}</Td>
                                                     <Td>{item.display_name}</Td>
                                                 </Tr>
                                             ))}
