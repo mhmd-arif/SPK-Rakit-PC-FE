@@ -7,13 +7,15 @@ import TableResult from "./TableResult";
 const Build = () => {
   const [showDiv, setShowDiv] = useState(false);
   const [jenisPenggunaan, setJenisPenggunaan] = useState('');
-  const [totalBudget, setTotalBudget] = useState(0);
-  const [data, setData] = useState([]);
+  const [totalBudget, setTotalBudget] = useState();
+  const [cpu, setCpu] = useState();
+  const [gpu, setGpu] = useState();
+  const [monitor, setMonitor] = useState();
+  const [peripheral, setperiPheral] = useState();
 
   const handleCheckboxChange = () => {
     setShowDiv(!showDiv);
   };
-  // div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${bgBuild})` }}
 
   return (
     <div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${BgBuild})` }} >
@@ -21,7 +23,7 @@ const Build = () => {
         <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">
             <p>Jenis Penggunaan</p>
-            <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={jenisPenggunaan} onChange={e => setJenisPenggunaan(e.target.value)} >
+            <Select isRequired={true} placeholder='Pilih opsi' w={256} borderColor='#002e39' value={jenisPenggunaan} onChange={e => setJenisPenggunaan(e.target.value)} >
               <option value='gaming'>Gaming</option>
               <option value='editing'>Editing</option>
               <option value='casual'>Casual</option>
@@ -39,34 +41,38 @@ const Build = () => {
         {showDiv && <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">
             <p>CPU</p>
-            <Select placeholder='Select option' w={256} borderColor='#002e39' >
-              <option value='option1'>Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
+            <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={cpu} onChange={e => setCpu(e.target.value)}>
+              <option value='intel'>Intel</option>
+              <option value='amd'>AMD</option>
+              <option value='any'>Bebas</option>
             </Select>
           </div>
           <div className="Select">
-            <p>RAM</p>
-            <Select placeholder='Select option' w={256} borderColor='#002e39'>
-              <option value='option1'>Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
+            <p>GPU</p>
+            <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={gpu} onChange={e => setGpu(e.target.value)}>
+              <option value='nvidia'>Nvidia</option>
+              <option value='amd'>AMD</option>
+              <option value='any'>Bebas</option>
+            </Select>
+          </div>
+          {/* <div className="">
+            <Checkbox onChange={e => setMonitor(e.target.value)} >Dengan monitor?</Checkbox>
+          </div>
+          <div className="">
+            <Checkbox onChange={e => setperiPheral(e.target.value)} >Dengan peripheral</Checkbox>
+          </div> */}
+          <div className="Select">
+            <p>Peripheral</p>
+            <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={monitor} onChange={e => setMonitor(parseInt(e.target.value))} >
+              <option value={1} >Ya</option>
+              <option value={0}>Tidak</option>
             </Select>
           </div>
           <div className="Select">
-            <p>Storage</p>
-            <Select placeholder='Select option' w={256} borderColor='#002e39'>
-              <option value='option1'>Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
-            </Select>
-          </div>
-          <div className="Select">
-            <p>Monitor</p>
-            <Select placeholder='Select option' w={256} borderColor='#002e39' >
-              <option value='option1'>Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
+            <p>Peripheral</p>
+            <Select placeholder='Pilih opsi' w={256} borderColor='#002e39' value={peripheral} onChange={e => setperiPheral(parseInt(e.target.value))} >
+              <option value={1} >Ya</option>
+              <option value={0}>Tidak</option>
             </Select>
           </div>
         </div>}
@@ -74,8 +80,7 @@ const Build = () => {
 
       </div>
       <div className="">
-        {/* <TableResult totalBudget={totalBudget} jenisPenggunaan={jenisPenggunaan} />  */}
-        <TableResult totalBudget={totalBudget} jenisPenggunaan={jenisPenggunaan} />
+        <TableResult totalBudget={totalBudget} jenisPenggunaan={jenisPenggunaan} cpu={cpu} gpu={gpu} monitor={monitor} peripheral={peripheral} />
       </div>
 
 

@@ -3,9 +3,10 @@ import { useTable } from 'react-table';
 import komponen from '../database/ComponentData';
 import { Button } from '@chakra-ui/react';
 
-const TableResult = ({ jenisPenggunaan, totalBudget }) => {
+const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripheral }) => {
     const [rekomendasi, setRekomendasi] = useState([]);
     const [totalHarga, setTotalHarga] = useState(0);
+    console.log(jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripheral)
 
     const calculateRekomendasi = () => {
         const cpuAlokasi = {
