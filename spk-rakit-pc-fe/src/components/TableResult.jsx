@@ -17,6 +17,9 @@ import {
     useToast, Button
 } from '@chakra-ui/react'
 
+function title(str) {
+    return str.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
+  }
 
 const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripheral }) => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -95,15 +98,17 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                                     <Table variant='striped' colorScheme='teal' w={250}>
                                         <Thead >
                                             <Tr>
-                                                <Th>Component</Th>
-                                                <Th>Price</Th>
-                                                <Th>Display Name</Th>
+                                                <Th>Gambar</Th>
+                                                <Th>Jenis Komponen</Th>
+                                                <Th>Harga</Th>
+                                                <Th>Nama Komponen</Th>
                                             </Tr>
                                         </Thead>
                                         <Tbody>
                                             {data.map((item, index) => (
                                                 <Tr key={index}>
-                                                    <Td>{item.component}</Td>
+                                                    <Td><img src={item.image??"https://cdn.icon-icons.com/icons2/2838/PNG/512/action_unavailable_icon_180783.png"} alt={item.display_name} width='250px' /></Td>
+                                                    <Td>{item.component.toUpperCase()}</Td>
                                                     <Td>{parseToIdr(item.price)}</Td>
                                                     <Td>{item.display_name}</Td>
                                                 </Tr>
