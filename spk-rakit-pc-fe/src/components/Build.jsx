@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import bgBuild from "../../public/bgBuild.svg";
+import { BgBuild } from "../assets";
+// import bgBuild from "../../public/bgBuild.svg";
 import { Select, Checkbox, Input, Button } from '@chakra-ui/react'
 import TableResult from "./TableResult";
 
@@ -15,7 +16,7 @@ const Build = () => {
   // div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${bgBuild})` }}
 
   return (
-    <div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${bgBuild})` }} >
+    <div className="Build w-full min-h-screen font-poppins text-black bg-[#F4F4F9] bg-no-repeat bg-contain bg-fixed" style={{ backgroundImage: `url(${BgBuild})` }} >
       <div className="flex flex-col items-center h-full pt-[120px] ">
         <div className="grid grid-cols-2 gap-x-[100px] gap-y-[20px] mb-[20px]">
           <div className="Select">

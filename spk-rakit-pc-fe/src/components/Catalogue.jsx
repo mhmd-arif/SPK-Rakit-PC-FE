@@ -1,8 +1,12 @@
 import { useState, useMemo } from "react";
-import bgBuild from "../../public/bgBuild.svg";
+import { BgBuild } from "../assets";
+import { Divider } from "@chakra-ui/react";
 
 const Catalogue = () => {
+    return (
+        <div className="h-screen"></div>
+    )
 
 };
-  
+
 export default Catalogue;

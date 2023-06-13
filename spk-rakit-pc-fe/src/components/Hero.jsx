@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import HeroImg from "../../public/heroImg.svg";
+import { HeroImg } from "../assets";
+// import HeroImg from "../../public/heroImg.svg";
 
 const Hero = () => {
   const navigate = useNavigate();
