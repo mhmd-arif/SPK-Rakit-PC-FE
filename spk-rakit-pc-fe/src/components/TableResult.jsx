@@ -1,8 +1,4 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useTable } from 'react-table';
-// import komponen from '../database/ComponentData';
-// import { NumberInput } from '@chakra-ui/react';
-import { } from '@chakra-ui/react';
 import { fetcher } from '../helpers/fetcher';
 import {
     Table,
@@ -18,8 +14,8 @@ import {
 } from '@chakra-ui/react'
 
 function title(str) {
-    return str.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
-  }
+    return str.replace(/(^|\s)\S/g, function (t) { return t.toUpperCase() });
+}
 
 const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripheral }) => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -33,9 +29,6 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
         }).format(number);
         return formatedNumber;
     }
-
-
-
 
     const RakitHandler = async () => {
         if (!jenisPenggunaan || !totalBudget) {
@@ -107,7 +100,7 @@ const TableResult = ({ jenisPenggunaan, totalBudget, cpu, gpu, monitor, peripher
                                         <Tbody>
                                             {data.map((item, index) => (
                                                 <Tr key={index}>
-                                                    <Td><img src={item.image??"https://cdn.icon-icons.com/icons2/2838/PNG/512/action_unavailable_icon_180783.png"} alt={item.display_name} width='250px' /></Td>
+                                                    <Td><img src={item.image ?? "https://cdn.icon-icons.com/icons2/2838/PNG/512/action_unavailable_icon_180783.png"} alt={item.display_name} width='250px' /></Td>
                                                     <Td>{item.component.toUpperCase()}</Td>
                                                     <Td>{parseToIdr(item.price)}</Td>
                                                     <Td>{item.display_name}</Td>
